@@ -4,11 +4,17 @@ Um conjunto de ferramentas em forma de API para facilitar o seu dia a dia.
 
 ![API Self-Hosted para Lowcoders](nocodesdk.png)
 
-### Assista a Live de Apresentação:
-
-https://youtu.be/cZIJcbM2MnA
-
 ## Deploy
+
+Salve o arquivo `.env.sample` como `.env` no diretório aonde você irá rodar o
+projeto (aonde está o arquivo compose.yaml).
+
+Em seguida gere uma nova API_KEY com o comando:
+
+`echo "base64:$(openssl rand -base64 32)"`
+
+E salve no arquivo `.env`. Não se esqueça de mudar as demais variáveis para os
+valores devidos.
 
 ```yaml
 ---
@@ -35,3 +41,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 ```
+
+## Assista a Live de Apresentação
+
+https://youtu.be/cZIJcbM2MnA
