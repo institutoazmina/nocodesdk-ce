@@ -3,22 +3,43 @@ version: "3"
 
 services:
   nocodesdk:
-    image: institutoazmina/nocodesdk:latest
+    image: ghcr.io/institutoazmina/nocodesdk:latest
     command: "php -d variables_order=EGPCS /var/www/html/artisan --workers=1 octane:start --server=swoole --host=0.0.0.0 --port=80"
     ports:
-      80:${PUBLIC_PORT}
-    restart: always
+      - 172.17.0.1:${PUBLIC_PORT}:80
     env_file: .env
     environment:
-        DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '100'
+        max-size: 1m
+    restart: always
+
   redis:
     image: redis:latest
     command: ["redis-server", "--appendonly", "yes"]
+
   mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
     env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 400M
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '100'
+        max-size: 1m
+    restart: always
+    volumes:
+      - nocodesdk_db:/var/lib/mysql
 
+volumes:
+  nocodesdk_db:
