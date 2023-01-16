@@ -9,7 +9,7 @@ services:
       - 172.17.0.1:50014:80
     env_file: .env
     environment:
-      - DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
     logging:
       driver: "json-file"
       options:
@@ -25,8 +25,6 @@ services:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     env_file: .env
-    environment:
-      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     deploy:
       resources:
         limits:
