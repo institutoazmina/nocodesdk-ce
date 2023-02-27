@@ -2,6 +2,7 @@
 name: Create and publish the Docker image and deploy the application
 
 on:
+  workflow_dispatch:
   push:
     branches: ['main']
 
