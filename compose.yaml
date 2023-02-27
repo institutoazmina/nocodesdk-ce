@@ -20,6 +20,7 @@ services:
   redis:
     image: redis:latest
     command: ["redis-server", "--appendonly", "yes"]
+    restart: always
 
   mysql:
     image: mysql
